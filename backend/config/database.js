@@ -1,19 +1,19 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const connectDatabase = () => {
   mongoose
-    .connect(process.env.DB_URI, {
+    .connect(process.env.DB_URI ,{
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    //   useCreateIndex: true, 
-    //   useFindAndModify: false, 
+      // createIndexes: true,
     })
-    .then(() => {
-      console.log(`Connected to MongoDB database using Mongoose`);
+    .then((data) => {
+      console.log(`Mongodb connected with server: ${data.connection.host}`);
     })
-    .catch((err) => {
-      console.log(`Error connecting to MongoDB: ${err}`);
-    });
+    
 };
 
 module.exports = connectDatabase;
+
+// mongodb+srv://sachinpandey12031999:123@cluster0.e4qlyop.mongodb.net/
+// http://localhost:4000/api/v1/product/new
