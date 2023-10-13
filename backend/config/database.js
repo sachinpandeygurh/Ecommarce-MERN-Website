@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const connectDatabase = () => {
   mongoose
-    .connect(process.env.DB_URI ,{
+    .connect(process.env.DB_URI || "mongodb://127.0.0.1:27017/ecommwebsite" ,{
       useNewUrlParser: true,
       useUnifiedTopology: true,
       // createIndexes: true,

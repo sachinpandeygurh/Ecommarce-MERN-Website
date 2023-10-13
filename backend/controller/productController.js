@@ -1,6 +1,7 @@
 const Product = require("../model/prodectModel");
 const ErrorHander = require("../utils/errorhander");
-const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const apiFeatures = require("../utils/apifeatures");
 
 // Create Product
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
@@ -18,13 +19,16 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 });
 
 // Get all Products
+
 exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
-  const products = await Product.find();
+  const features = new apiFeatures(Product.find(), req.query).search();
+  const products = await features.query;
   res.status(200).json({
     success: true,
     products,
   });
 });
+
 
 // Get one product details
 exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
@@ -48,15 +52,11 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHander("Product not found", 404));
   }
 
-  product = await Product.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    {
-      new: true,
-      runValidators: true,
-      useFindAndModify: false,
-    }
-  );
+  product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
 
   res.status(200).json({
     message: "Product updated successfully",

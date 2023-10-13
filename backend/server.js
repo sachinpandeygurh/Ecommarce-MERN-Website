@@ -34,3 +34,9 @@ process.on("unhandledRejection", (err) => {
     process.exit(1);
   });
 });
+
+
+let randNo = Math.floor(Math.random() * 10);
+console.log(randNo);
+
+// 01:34:50
