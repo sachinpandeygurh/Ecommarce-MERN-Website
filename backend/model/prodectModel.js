@@ -1,19 +1,19 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
-    required:true,
+    required: true,
     trim: true,
   },
   description: {
     type: String,
-    required: [true, 'Please enter the product description'],
+    required: [true, "Please enter the product description"],
   },
   price: {
     type: Number,
     default: 0,
-    required: [true, 'Please enter the product price'],
+    required: [true, "Please enter the product price"],
     maxlength: [4, "Price can't exceed 8 characters"],
   },
   rating: {
@@ -31,16 +31,16 @@ const productSchema = new mongoose.Schema({
       url: {
         type: String,
         required: true,
-      }
-    }
+      },
+    },
   ],
   category: {
     type: String,
-    required: [true, 'Please enter the product category']
+    required: [true, "Please enter the product category"],
   },
   stock: {
     type: Number,
-    required: [true, 'Please enter the product stock'],
+    required: [true, "Please enter the product stock"],
     max: [9999, "Stock can't exceed 4 characters"],
     default: 1,
   },
@@ -60,36 +60,23 @@ const productSchema = new mongoose.Schema({
       },
       comment: {
         type: String,
-        maxlength: [280, 'Comment should be less than or equal to 280 characters'],
+        maxlength: [
+          280,
+          "Comment should be less than or equal to 280 characters",
+        ],
         required: true,
       },
     },
   ],
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: [true, "Product must belong to a User"],
+  },
   createdAt: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
 
-module.exports = mongoose.model('Product', productSchema);
-
-/*
-// {
-//   "name": "Sample Product",
-//   "description": "This is a sample product description",
-//   "price": 1200,
-//   "category": "Sample Category",
-//   "images": 
-//     {
-//       "public_id": "sample-public-id",
-//       "url": "sample-url"
-//     },
-//   "stock": 10,
-//   "reviews": 
-//     {
-//       "name": "John Doe",
-//       "rating": 4,
-//       "comment": "This is a sample review"
-//     }
-// }
-*/
+module.exports = mongoose.model("Product", productSchema);

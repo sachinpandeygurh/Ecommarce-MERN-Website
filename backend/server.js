@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 process.on("uncaughtException", (err) => {
   console.log(`Uncaught Exception: ${err.message}`);
   console.log(`Shutting down the server due to uncaught exception `);
-  process.exit(1);
+  process.exit(1); 
 });
 
 // config
@@ -39,4 +39,4 @@ process.on("unhandledRejection", (err) => {
 let randNo = Math.floor(Math.random() * 10);
 console.log(randNo);
 
-// 01:34:50
+// 03:05:29

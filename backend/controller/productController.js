@@ -1,10 +1,12 @@
 const Product = require("../model/prodectModel");
 const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const apiFeatures = require("../utils/apifeatures");
+const ApiFeatures = require("../utils/apifeatures");
 
 // Create Product
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
+
+  req.body.user=req.user.id
   let prod = req.body;
 
   if (!prod) {
@@ -21,11 +23,26 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 // Get all Products
 
 exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
-  const features = new apiFeatures(Product.find(), req.query).search();
-  const products = await features.query;
+  const resultPerPage = 8;
+
+  // Don't execute the query here, just build it with the `ApiFeatures` class
+  const apiFeature = new ApiFeatures(Product.find(), req.query).search().filter();
+
+  // Execute the query once to get the total product count
+  const productsCount = await Product.countDocuments();
+
+  // Now, you can use the `apiFeature` object to paginate the results
+  apiFeature.pagination(resultPerPage);
+  const products = await apiFeature.query;
+
+  const filteredProductsCount = products.length;
+
   res.status(200).json({
     success: true,
     products,
+    productsCount,
+    resultPerPage,
+    filteredProductsCount,
   });
 });
 
@@ -41,6 +58,7 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
   res.status(200).json({
     success: true,
     product,
+    productsCount
   });
 });
 
