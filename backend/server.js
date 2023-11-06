@@ -36,7 +36,5 @@ process.on("unhandledRejection", (err) => {
 });
 
 
-let randNo = Math.floor(Math.random() * 10);
-console.log(randNo);
-
-// 03:05:29
+// let randNo = Math.floor(Math.random() * 10);
+// console.log(randNo);

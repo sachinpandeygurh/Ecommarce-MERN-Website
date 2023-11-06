@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -16,7 +17,7 @@ const productSchema = new mongoose.Schema({
     required: [true, "Please enter the product price"],
     maxlength: [4, "Price can't exceed 8 characters"],
   },
-  rating: {
+  ratings: {
     type: Number,
     min: 0,
     max: 5,
@@ -50,6 +51,11 @@ const productSchema = new mongoose.Schema({
   },
   reviews: [
     {
+      user: {
+      type: mongoose.Schema.ObjectId,
+      ref: "User",
+      required: [true, "Product must belong to a User"],
+    },
       name: {
         type: String,
         required: true,
@@ -79,4 +85,7 @@ const productSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Product", productSchema);
+// module.exports = mongoose.model("Product", productSchema);
+const Product = mongoose.model("Product", productSchema); 
+
+module.exports = Product;

@@ -13,19 +13,19 @@ if(err.name=== "CastError"){
 // Mongoose dublicate key error
 if(err.code ===11000){
     const message=`Duplicate ${Object.keys(err.keyValue)} Error`
-    err =new ErrorHandler(message,409)
+    err =new ErrorHander(message,409)
     }
 
 // Wrong JWT error
 if(err.name==='UnauthorizedError' || "jsonwebTokenError"){
     const message="Invalid Token please login again"
-    err = new ErrorHandler(message,401)
+    err = new ErrorHander(message,401)
     }
 
 // JWT Expire error
 if(err.name == 'TokenExpaireError'){
     const message ="Your token has expired please login again"
-    err = new ErrorHandler(message,401)
+    err = new ErrorHander(message,401)
     }
 
 
