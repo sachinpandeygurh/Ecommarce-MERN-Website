@@ -17,9 +17,11 @@ app.use(cookieParser())
 
 const product= require("./routes/productsRoute")
 const user= require("./routes/userRoute")
+const order= require("./routes/orderRoute")
 
 app.use("/api/v1",product)
 app.use('/api/v1', user)
+app.use('/api/v1', order)
 
 
 module.exports=app
